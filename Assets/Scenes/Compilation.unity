@@ -284,7 +284,7 @@ PrefabInstance:
     - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: decorations.Array.data[2]
       value: 
-      objectReference: {fileID: 3892890623358175640, guid: 5ca52afb4b27b7f448af7f4992ebd3d2, type: 3}
+      objectReference: {fileID: 2758915723561599522, guid: 4cb91470707260e48aa7fcfc81a8550b, type: 3}
     - target: {fileID: 2151739581676998547, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: m_RootOrder
       value: 2
