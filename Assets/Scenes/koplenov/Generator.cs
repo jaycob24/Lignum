@@ -13,6 +13,7 @@ public class Generator : MonoBehaviour
 
     public Material defaultMaterial;
     public GameObject[] decorations;
+    public GameObject[] mobs;
 
     public GameObject Player;
     
@@ -35,6 +36,7 @@ public class Generator : MonoBehaviour
         {
             area.Material = defaultMaterial;
             area.Decorations = decorations;
+            area.Mobs = mobs;
             
             area.ScaleFactor = new Vector2(0.5f,0.5f);
             area.Generate();
@@ -92,6 +94,7 @@ public class Zone
 
     public GameObject ZoneObject;
     public GameObject[] Decorations;
+    public GameObject[] Mobs;
     private Transform _root;
     
     
@@ -109,6 +112,8 @@ public class Zone
     private Vector3[] _normals;
     private Vector2[] _uvs;
     private int[] _triangles;
+
+    public List<Vector3> WaypointsForMobs = new List<Vector3>();
 
     public Zone(Transform root, int lengthX, int widthZ)
     {
@@ -132,6 +137,22 @@ public class Zone
         GenerateMesh();
         CreateObject();
         AddDecorations();
+        AddMobs();
+    }
+
+    private void AddMobs()
+    {
+        for (var index = 0; index < _vertices.Length; index+=4)
+        {
+            SplitAtRandom(1,//%
+                () =>
+                {
+                    Vector3 point = ZoneObject.transform.TransformPoint(_vertices[index]);
+                    var enemy = Object.Instantiate(Mobs[Random.Range(0, Mobs.Length)], point, Quaternion.identity);
+                    enemy.GetComponent<EnemyBehavior>().Waypoints = WaypointsForMobs.ToArray();
+                }, 
+                () => { /*  ¯\_(ツ)_/¯ */ });
+        }
     }
 
     private void AddDecorations()
@@ -148,6 +169,14 @@ public class Zone
                     var instance = Object.Instantiate(Decorations[Random.Range(0, Decorations.Length)], point, Quaternion.identity, decorationsGameObject.transform);
                     instance.AddComponent<NavMeshModifier>();
                     instance.isStatic = true;
+                }, 
+                () => { /*  ¯\_(ツ)_/¯ */ });
+            
+            SplitAtRandom(5,//%
+                () =>
+                {
+                    Vector3 point = ZoneObject.transform.TransformPoint(_vertices[index]);
+                    WaypointsForMobs.Add(point);
                 }, 
                 () => { /*  ¯\_(ツ)_/¯ */ });
         }
@@ -206,7 +235,12 @@ public class Zone
                 vertices.Add(triangle);
             } 
         }
-        
+
+        for (var index = 0; index < vertices.Count; index++)
+        {
+            vertices[index] -= (Vector3.down *  Random.Range(0f, 0.6f));
+        }
+
         return vertices.ToArray();
     }
     protected virtual int[] GenerateTriangles()
