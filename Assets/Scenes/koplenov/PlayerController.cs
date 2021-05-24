@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,13 +16,22 @@ public class PlayerController : MonoBehaviour
     private GameObject FocusedEnemy;
     private bool isNowAttack;
 
+    private AudioSource _audioSource;
+    public AudioClip attackToEnemyAudioClips;
+    public AudioClip attackToAirAudioClips;
+    public AudioClip attackToSwordAudioClips;
+
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         PointClick = Instantiate(PointClick, Vector3.zero + Vector3.up / 2, Quaternion.identity);
         PointClick.transform.Rotate(90, 0, 0);
 
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _camera = Camera.main;
+
+        // set default parms
+        defaultFireWallScale = FireWall.transform.localScale;
     }
 
     private void Update()
@@ -50,6 +58,47 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("FireBall");
+            if(!isNowAttack)
+                StartCoroutine(UseFireWall());
+        }
+    }
+
+    public GameObject FireWall;
+    public Vector3 defaultFireWallScale;
+    IEnumerator UseFireWall()
+    {
+        isNowAttack = true;
+        
+        FireWall.transform.localScale = defaultFireWallScale;
+        FireWall.transform.position = transform.position + Vector3.down;
+        FireWall.SetActive(true);
+        
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            
+            if (FireWall.transform.localScale.magnitude < new Vector3(4, 4, 4).magnitude)
+            {
+                FireWall.transform.localScale *= 1.2f;
+                FireWall.transform.Rotate(0, 60 * Time.deltaTime, 0);
+                FireWall.transform.position = transform.position + Vector3.down;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        yield return new WaitForSeconds(.4f);
+        
+        FireWall.SetActive(false);
+        
+        isNowAttack = false;
+        yield return null;
     }
 
     private void FixedUpdate()
@@ -66,27 +115,49 @@ public class PlayerController : MonoBehaviour
 
         #endregion
     }
-
+    
+    private void Damage(EnemyBehavior enemyBehavior)
+    {
+        enemyBehavior.Damage(50);
+    }
+    
     IEnumerator Attack()
     {
-        //todo дамаг по FocusedEnemy
+        var enemyBehavior = FocusedEnemy.GetComponent<EnemyBehavior>();
 
-        // fill my yea)
-        transform.LookAt(FocusedEnemy.transform);
-        
         isNowAttack = true;
 
         _navMeshAgent.isStopped = true;
         animator.SetBool("isAttack", true);
-        yield return new WaitForSeconds(.5f);
+        
+        // fill my yea)
+        transform.LookAt(FocusedEnemy.transform);
+        yield return new WaitForSeconds(.85f);
+        transform.LookAt(FocusedEnemy.transform);
+        
+        // sound
+        if (enemyBehavior.isNowAttack)
+        {
+            _audioSource.PlayOneShot(attackToSwordAudioClips);
+            Damage(enemyBehavior);
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, FocusedEnemy.transform.position) < 1.65f)
+            {
+                _audioSource.PlayOneShot(attackToEnemyAudioClips);
+                Damage(enemyBehavior);
+            }
+            else
+            {
+                _audioSource.PlayOneShot(attackToAirAudioClips);
+            }
+        }
+
+
         animator.SetBool("isAttack", false);
         _navMeshAgent.isStopped = false;
-        
-        // todo атакуем
-        // todo включаем анимацию атаки
-        // todo если убили, гг
-        // todo если убежал, то бежим за ним
-        
+
         isNowAttack = false;
     }
 

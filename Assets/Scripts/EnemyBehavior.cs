@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(AudioSource))]
 class EnemyBehavior : MonoBehaviour
 {
     // дефолтное состояние
@@ -13,12 +15,12 @@ class EnemyBehavior : MonoBehaviour
     public Vector3[] Waypoints;
     public int indexOfWaypoint;
     private NavMeshAgent navMeshAgent;
-    private bool isNowAttack;
+    public bool isNowAttack;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
-        Debug.Log(player);
+        //Debug.Log(player);
         navMeshAgent = GetComponent<NavMeshAgent>();
         indexOfWaypoint = Random.Range(0, Waypoints.Length);
 
@@ -26,7 +28,31 @@ class EnemyBehavior : MonoBehaviour
         //navMeshAgent.SetDestination(new Vector3(5,5,5));
     }
 
-    private void Update()
+    public int health = 100;
+    public AudioClip death;
+    public void Damage(int damageCount)
+    {
+        health -= damageCount;
+
+        if (health <= 0)
+        {
+            animator.SetBool("isRun", false);
+            animator.SetBool("isAttack", false);
+            
+            animator.SetBool("isDeath", true);
+            
+            
+            GetComponent<AudioSource>().PlayOneShot(death, .2f);
+            
+            // turn everything off in every way)0
+            navMeshAgent.speed = 0;
+            navMeshAgent.isStopped = true;
+            navMeshAgent.enabled = true;
+            this.enabled = false;
+        }
+    }
+    
+    private void FixedUpdate()
     {
         player ??= GameObject.FindWithTag("Player");
         
@@ -46,35 +72,38 @@ class EnemyBehavior : MonoBehaviour
     }
 
     void Patrooling()
-    { 
+    {
        var position = transform.position;
        var distanceBetweenPlayer = Vector3.Distance(position, player.transform.position);
        var distanceBetweenWaypoints = Vector3.Distance(position, Waypoints[indexOfWaypoint]);
 
-       if (distanceBetweenPlayer > 5)
+       if (distanceBetweenPlayer > 10)
        {
            // ковыляем с точки на точку
            if (distanceBetweenWaypoints < 2)
            {
                // next waypoint
-               var tempValue = indexOfWaypoint;
-               while (indexOfWaypoint == tempValue)
-               {
-                   indexOfWaypoint = Random.Range(0, Waypoints.Length);   
-               }
+               indexOfWaypoint = Random.Range(0, Waypoints.Length);
            }
            else
            {
                // walk
-               if(navMeshAgent.destination != Waypoints[indexOfWaypoint])
+               if (navMeshAgent.destination != Waypoints[indexOfWaypoint])
+               {
                    navMeshAgent.SetDestination(Waypoints[indexOfWaypoint]);
-               
-               // todo remove this line
-               animator.SetBool("isRun", true);
+                   
+                   // todo remove this lines
+                   navMeshAgent.speed = 0.4f;
+                   animator.SetBool("isWalk", true);
+               }
            }   
        }
        else
        {
+           // todo remove this lines
+           navMeshAgent.speed = 4;
+           animator.SetBool("isWalk", false);
+           
            currentState = EnemyStates.Run;
        }
        
@@ -119,14 +148,16 @@ class EnemyBehavior : MonoBehaviour
 
     void Run()
     {
-        animator.SetBool("isRun", true);
-        
         var position = transform.position;
         var distanceBetweenPlayer = Vector3.Distance(position, player.transform.position);
         if (distanceBetweenPlayer > 2f)
         {
-            if(navMeshAgent.destination != player.transform.position)
+            if (navMeshAgent.destination != player.transform.position)
+            {
+                animator.SetBool("isRun", true);
                 navMeshAgent.SetDestination(player.transform.position);
+            }
+
             if (distanceBetweenPlayer > 8f)
             {
                 currentState = EnemyStates.Patrolling;
