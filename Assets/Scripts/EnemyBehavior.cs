@@ -17,8 +17,14 @@ class EnemyBehavior : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     public bool isNowAttack;
 
+    private AudioSource _audioSource;
+    public AudioClip attackToEnemyAudioClips;
+    public AudioClip attackToAirAudioClips;
+    public AudioClip attackToSwordAudioClips;
+    
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         player = GameObject.FindWithTag("Player");
         //Debug.Log(player);
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -131,9 +137,30 @@ class EnemyBehavior : MonoBehaviour
         animator.SetBool("isAttack", true);
         yield return new WaitForSeconds(1.4f);
         
-        distanceBetweenPlayer = Vector3.Distance(transform.position, player.transform.position);
-        if (distanceBetweenPlayer < 1.65f)
+        ///distanceBetweenPlayer = Vector3.Distance(transform.position, player.transform.position);
+        ///if (distanceBetweenPlayer < 1.65f)
+        ///    player.GetComponent<PlayerController>().Damage(10);
+        
+        //
+        // sound
+        if (player.GetComponent<PlayerController>().isNowAttack)
+        {
+            _audioSource.PlayOneShot(attackToSwordAudioClips);
             player.GetComponent<PlayerController>().Damage(10);
+        }
+        else
+        {
+            if (Vector3.Distance(transform.position, transform.position) < 1.65f)
+            {
+                _audioSource.PlayOneShot(attackToEnemyAudioClips);
+                player.GetComponent<PlayerController>().Damage(10);
+            }
+            else
+            {
+                _audioSource.PlayOneShot(attackToAirAudioClips);
+            }
+        }
+        //
         
         animator.SetBool("isAttack", false);
         navMeshAgent.isStopped = false;

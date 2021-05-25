@@ -14,12 +14,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 point;
 
     private GameObject FocusedEnemy;
-    private bool isNowAttack;
+    public bool isNowAttack;
 
     private AudioSource _audioSource;
     public AudioClip attackToEnemyAudioClips;
     public AudioClip attackToAirAudioClips;
     public AudioClip attackToSwordAudioClips;
+    
+    public AudioClip fireWallAudioClips;
 
     private void Start()
     {
@@ -71,6 +73,14 @@ public class PlayerController : MonoBehaviour
     public Vector3 defaultFireWallScale;
     IEnumerator UseFireWall()
     {
+        if (ui.GetMana() < 0.3)
+            yield break;
+        
+        // такова цена огня..
+        DamageMana(30f);
+
+        _audioSource.PlayOneShot(fireWallAudioClips);
+        
         isNowAttack = true;
         
         FireWall.transform.localScale = defaultFireWallScale;
@@ -93,8 +103,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        yield return new WaitForSeconds(.4f);
-        
+        yield return new WaitForSeconds(.85f);
+
         FireWall.SetActive(false);
         
         isNowAttack = false;
@@ -164,5 +174,9 @@ public class PlayerController : MonoBehaviour
     public void Damage(float i)
     {
         ui.DamageHealth(ui.GetHealth() - i/100);
+    }
+    public void DamageMana(float i)
+    {
+        ui.DamageMana(ui.GetMana() - i/100);
     }
 }

@@ -1362,8 +1362,11 @@ MonoBehaviour:
   Waypoints: []
   indexOfWaypoint: 0
   isNowAttack: 0
+  attackToEnemyAudioClips: {fileID: 8300000, guid: ad4b90599e56b664b81912521376ce5d, type: 3}
+  attackToAirAudioClips: {fileID: 8300000, guid: c41e981130a38e94395ebff16df20552, type: 3}
+  attackToSwordAudioClips: {fileID: 8300000, guid: ad4b90599e56b664b81912521376ce5d, type: 3}
   health: 100
-  Death: {fileID: 8300000, guid: ec3995f9dee4d744fb69e1f969f0105c, type: 3}
+  death: {fileID: 8300000, guid: ec3995f9dee4d744fb69e1f969f0105c, type: 3}
 --- !u!82 &1050071592326953876
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1376,7 +1379,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
