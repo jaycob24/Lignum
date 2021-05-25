@@ -14,17 +14,17 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 1, g: 0.57254905, b: 0.3764706, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_LinearFogStart: 15
+  m_LinearFogEnd: 40
+  m_AmbientSkyColor: {r: 0.46, g: 0.23713002, b: 0.19780001, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -592,20 +592,24 @@ PrefabInstance:
       objectReference: {fileID: 7283971992458010935, guid: 15e59b07dd3c19e419017574264f3afc, type: 3}
     - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: decorations.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: decorations.Array.data[0]
       value: 
-      objectReference: {fileID: 609829495965090460, guid: 2063dcef372e04e4ebd50eae1a33db88, type: 3}
+      objectReference: {fileID: 6347428938371899076, guid: fb751a9588ecb1f4393f4c35bd37cf5c, type: 3}
     - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: decorations.Array.data[1]
       value: 
-      objectReference: {fileID: 609829495965090460, guid: 2063dcef372e04e4ebd50eae1a33db88, type: 3}
+      objectReference: {fileID: 492362722639800601, guid: 6fdc667cf9641ac45a2c852a2735d467, type: 3}
     - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: decorations.Array.data[2]
       value: 
       objectReference: {fileID: 2758915723561599522, guid: 4cb91470707260e48aa7fcfc81a8550b, type: 3}
+    - target: {fileID: 2151739581676998546, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
+      propertyPath: decorations.Array.data[3]
+      value: 
+      objectReference: {fileID: 5089835384029422823, guid: c93c4b9d587d09545973a8bf7d074354, type: 3}
     - target: {fileID: 2151739581676998547, guid: bd8b849aefb703d498e8f0018caf8bc0, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1100,21 +1104,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud
       objectReference: {fileID: 0}
+    - target: {fileID: 3918331715421263026, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_LocalScale.x
-      value: 47.80251
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_LocalScale.y
-      value: 44.905964
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3893
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_LocalPosition.x
