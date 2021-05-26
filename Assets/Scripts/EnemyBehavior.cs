@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(AudioSource))]
@@ -150,7 +149,7 @@ class EnemyBehavior : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, transform.position) < 1.65f)
+            if (Vector3.Distance(transform.position, player.transform.position) < 1.65f)
             {
                 _audioSource.PlayOneShot(attackToEnemyAudioClips);
                 player.GetComponent<PlayerController>().Damage(10);
@@ -161,6 +160,7 @@ class EnemyBehavior : MonoBehaviour
             }
         }
         //
+        yield return new WaitForSeconds(.6f);
         
         animator.SetBool("isAttack", false);
         navMeshAgent.isStopped = false;

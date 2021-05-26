@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+
     private Camera _camera;
     private NavMeshAgent _navMeshAgent;
     public Animator animator;
@@ -22,9 +23,24 @@ public class PlayerController : MonoBehaviour
     public AudioClip attackToSwordAudioClips;
     
     public AudioClip fireWallAudioClips;
+    public AudioClip hillAudioClips;
+    public AudioClip notEnoughManaAudioClips;
 
+    // LSS ¯\_(ツ)_/¯
+    IEnumerator LifeSupportSystem()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3);
+            
+            ui.DamageMana(ui.GetMana() + 0.07f);
+        }
+    }
     private void Start()
     {
+        // Give my mana!!1
+        StartCoroutine(LifeSupportSystem());
+        
         _audioSource = GetComponent<AudioSource>();
         PointClick = Instantiate(PointClick, Vector3.zero + Vector3.up / 2, Quaternion.identity);
         PointClick.transform.Rotate(90, 0, 0);
@@ -33,7 +49,7 @@ public class PlayerController : MonoBehaviour
         _camera = Camera.main;
 
         // set default parms
-        defaultFireWallScale = FireWall.transform.localScale;
+        defaultFireWallScale = fireWallGameObject.transform.localScale;
     }
 
     private void Update()
@@ -63,18 +79,50 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            Debug.Log("Hill!");
+            if(!isNowAttack)
+                StartCoroutine(UseHill());
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             Debug.Log("FireBall");
             if(!isNowAttack)
                 StartCoroutine(UseFireWall());
         }
     }
 
-    public GameObject FireWall;
+    public GameObject fireWallGameObject;
+    public MeshRenderer fireWallMeshRenderer;
+    public FireWall fireWall;
+    
     public Vector3 defaultFireWallScale;
     IEnumerator UseFireWall()
     {
-        if (ui.GetMana() < 0.3)
+
+        // если навык открыт
+        if(!ui.spellsList[1].learned)
             yield break;
+
+        if (ui.GetMana() < 0.3)
+        {
+            _audioSource.PlayOneShot(notEnoughManaAudioClips);
+            yield break;
+        }
+
+        
+        
+        var maxScale = new Vector3(4, 4, 4);
+        if (ui.spellsList[2].learned)
+        {
+            fireWallMeshRenderer.material = fireWall.lvl2;
+            maxScale *= 2;
+        }
+        else
+        {
+            fireWallMeshRenderer.material = fireWall.lvl1;
+        }
+        
         
         // такова цена огня..
         DamageMana(30f);
@@ -83,19 +131,19 @@ public class PlayerController : MonoBehaviour
         
         isNowAttack = true;
         
-        FireWall.transform.localScale = defaultFireWallScale;
-        FireWall.transform.position = transform.position + Vector3.down;
-        FireWall.SetActive(true);
+        fireWallGameObject.transform.localScale = defaultFireWallScale;
+        fireWallGameObject.transform.position = transform.position + Vector3.down;
+        fireWallGameObject.SetActive(true);
         
         while (true)
         {
             yield return new WaitForFixedUpdate();
             
-            if (FireWall.transform.localScale.magnitude < new Vector3(4, 4, 4).magnitude)
+            if (fireWallGameObject.transform.localScale.magnitude < maxScale.magnitude)
             {
-                FireWall.transform.localScale *= 1.2f;
-                FireWall.transform.Rotate(0, 60 * Time.deltaTime, 0);
-                FireWall.transform.position = transform.position + Vector3.down;
+                fireWallGameObject.transform.localScale *= 1.2f;
+                fireWallGameObject.transform.Rotate(0, 60 * Time.deltaTime, 0);
+                fireWallGameObject.transform.position = transform.position + Vector3.down;
             }
             else
             {
@@ -105,8 +153,36 @@ public class PlayerController : MonoBehaviour
         
         yield return new WaitForSeconds(.85f);
 
-        FireWall.SetActive(false);
+        fireWallGameObject.SetActive(false);
         
+        isNowAttack = false;
+        yield return null;
+    }
+    IEnumerator UseHill()
+    {
+        // если навык открыт
+        if(!ui.spellsList[0].learned)
+            yield break;
+        
+        // если хватает маны и мало здоровья
+        if (ui.GetMana() < 0.4f || ui.GetHealth() > 0.9f)
+        {
+            _audioSource.PlayOneShot(notEnoughManaAudioClips);
+            yield break;
+        }
+        
+        // такова цена хила..
+        DamageMana(40f);
+        
+        // получаем 40% хп за хилл
+        ui.DamageHealth(ui.GetHealth() + 0.4f);
+        
+        _audioSource.PlayOneShot(hillAudioClips);
+        
+        isNowAttack = true;
+
+        yield return new WaitForSeconds(.85f);
+
         isNowAttack = false;
         yield return null;
     }

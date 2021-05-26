@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EscPause : MonoBehaviour
 {
+    private void Awake() => Time.timeScale = 1f;
+
     public void ToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
