@@ -14,6 +14,8 @@ public class UI : MonoBehaviour
     
     [Header("Spells")]
     public List<UiSpell> spellsList;
+    public Text skillPoints;
+    public int  countOfSkillPoints;
     public Text spellName;
     public Text spellDescription;
 
@@ -23,6 +25,8 @@ public class UI : MonoBehaviour
         {
             uiSpell.UpdateState();
         }
+
+        skillPoints.text = $"{countOfSkillPoints} Skill Points";
     }
     public void SetSpellInfo(UiSpell spellId)
     {
@@ -37,11 +41,20 @@ public class UI : MonoBehaviour
 
     public void TryLearn(UiSpell uiSpell)
     {
+        if (countOfSkillPoints == 0)
+        {
+            spellDescription.text = "You have no skill points!";
+            return;
+        }
+        
         if (uiSpell.canLearn)
         {
             if (!uiSpell.learned)
             {
                 uiSpell.learned = true;
+                countOfSkillPoints--;
+                skillPoints.text = $"{countOfSkillPoints} Skill Points";
+                
                 if (uiSpell.nextState != null)
                 {
                     uiSpell.nextState.canLearn = true;

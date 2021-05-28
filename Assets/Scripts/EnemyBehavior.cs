@@ -11,7 +11,7 @@ class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public Animator animator;
 
-    public Vector3[] Waypoints;
+    public Vector3[] waypoints;
     public int indexOfWaypoint;
     private NavMeshAgent navMeshAgent;
     public bool isNowAttack;
@@ -21,16 +21,18 @@ class EnemyBehavior : MonoBehaviour
     public AudioClip attackToAirAudioClips;
     public AudioClip attackToSwordAudioClips;
     
-    private void Start()
+    IEnumerator Start()
     {
+        // to visually distinguish the initial animation speeds of multiple enemies
+        animator.enabled = false;
+        yield return new WaitForSeconds(Random.Range(.1f, .9f));
+        animator.enabled = true;
+        
         _audioSource = GetComponent<AudioSource>();
         player = GameObject.FindWithTag("Player");
         //Debug.Log(player);
         navMeshAgent = GetComponent<NavMeshAgent>();
-        indexOfWaypoint = Random.Range(0, Waypoints.Length);
-
-        //currentWaypoint.transform.position = new Vector3(Random.Range(0f,5f), -5, Random.Range(0f,5f));
-        //navMeshAgent.SetDestination(new Vector3(5,5,5));
+        indexOfWaypoint = Random.Range(0, waypoints.Length);
     }
 
     public int health = 100;
@@ -60,6 +62,11 @@ class EnemyBehavior : MonoBehaviour
     private void FixedUpdate()
     {
         player ??= GameObject.FindWithTag("Player");
+        if(player is null)
+            return;
+        
+        if(health <= 0)
+            return;
         
         switch (currentState)
         {
@@ -80,7 +87,7 @@ class EnemyBehavior : MonoBehaviour
     {
        var position = transform.position;
        var distanceBetweenPlayer = Vector3.Distance(position, player.transform.position);
-       var distanceBetweenWaypoints = Vector3.Distance(position, Waypoints[indexOfWaypoint]);
+       var distanceBetweenWaypoints = Vector3.Distance(position, waypoints[indexOfWaypoint]);
 
        if (distanceBetweenPlayer > 10)
        {
@@ -88,14 +95,14 @@ class EnemyBehavior : MonoBehaviour
            if (distanceBetweenWaypoints < 2)
            {
                // next waypoint
-               indexOfWaypoint = Random.Range(0, Waypoints.Length);
+               indexOfWaypoint = Random.Range(0, waypoints.Length);
            }
            else
            {
                // walk
-               if (navMeshAgent.destination != Waypoints[indexOfWaypoint])
+               if (navMeshAgent.destination != waypoints[indexOfWaypoint])
                {
-                   navMeshAgent.SetDestination(Waypoints[indexOfWaypoint]);
+                   navMeshAgent.SetDestination(waypoints[indexOfWaypoint]);
                    
                    // todo remove this lines
                    navMeshAgent.speed = 0.4f;
@@ -136,11 +143,6 @@ class EnemyBehavior : MonoBehaviour
         animator.SetBool("isAttack", true);
         yield return new WaitForSeconds(1.4f);
         
-        ///distanceBetweenPlayer = Vector3.Distance(transform.position, player.transform.position);
-        ///if (distanceBetweenPlayer < 1.65f)
-        ///    player.GetComponent<PlayerController>().Damage(10);
-        
-        //
         // sound
         if (player.GetComponent<PlayerController>().isNowAttack)
         {
@@ -159,16 +161,11 @@ class EnemyBehavior : MonoBehaviour
                 _audioSource.PlayOneShot(attackToAirAudioClips);
             }
         }
-        //
+        
         yield return new WaitForSeconds(.6f);
         
         animator.SetBool("isAttack", false);
         navMeshAgent.isStopped = false;
-        
-        // todo атакуем
-        // todo включаем анимацию атаки
-        // todo если убили, гг
-        // todo если убежал, то бежим за ним
         
         isNowAttack = false;
     }

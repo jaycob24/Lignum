@@ -79,6 +79,85 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 6
+--- !u!1 &373459722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373459723}
+  - component: {fileID: 373459724}
+  - component: {fileID: 373459725}
+  m_Layer: 5
+  m_Name: SkillPointInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &373459723
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373459722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1142709726492689045}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.045, y: 0.53229254}
+  m_AnchorMax: {x: 0.462, y: 0.5755297}
+  m_AnchoredPosition: {x: 0.5726929, y: -0.099998474}
+  m_SizeDelta: {x: -0.4544983, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &373459724
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373459722}
+  m_CullTransparentMesh: 1
+--- !u!114 &373459725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373459722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 28
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
 --- !u!1 &642323720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,6 +1107,7 @@ RectTransform:
   m_Children:
   - {fileID: 5370094558931943455}
   - {fileID: 1012470210252486729}
+  - {fileID: 373459723}
   m_Father: {fileID: 4056250805495461993}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1078,7 +1158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.77930176}
-  m_AnchoredPosition: {x: 0.530838, y: 6.377697}
+  m_AnchoredPosition: {x: 0.530838, y: 6.3776855}
   m_SizeDelta: {x: -18.661, y: -4.0593}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &192057759552920635
@@ -1892,6 +1972,8 @@ MonoBehaviour:
   - {fileID: 7289186192410992825}
   - {fileID: 3938178939982788766}
   - {fileID: 3489230909184576452}
+  skillPoints: {fileID: 373459725}
+  countOfSkillPoints: 0
   spellName: {fileID: 5257033018874035313}
   spellDescription: {fileID: 2373508253007475220}
   defaultSpellName: Point to something!
@@ -2162,7 +2244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10558704, y: 0.10733744}
   m_AnchorMax: {x: 0.38558707, y: 0.37644473}
-  m_AnchoredPosition: {x: 0.30000305, y: 0.80000305}
+  m_AnchoredPosition: {x: 0.30000305, y: 0.7999878}
   m_SizeDelta: {x: -1.0318985, y: 0.036598206}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4818832041270531081
@@ -2361,7 +2443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5204672, y: 0.7223738}
-  m_AnchoredPosition: {x: 1.6168213, y: 1.2593842}
+  m_AnchoredPosition: {x: 1.6168213, y: 1.2593994}
   m_SizeDelta: {x: 3.2365723, y: 3.295227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4233798397151946652
