@@ -14,13 +14,13 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
-  m_FogColor: {r: 1, g: 0.57254905, b: 0.3764706, a: 1}
+  m_Fog: 0
+  m_FogColor: {r: 0.64705884, g: 0.77254903, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 15
-  m_LinearFogEnd: 40
-  m_AmbientSkyColor: {r: 0.46, g: 0.23713002, b: 0.19780001, a: 1}
+  m_LinearFogStart: 25
+  m_LinearFogEnd: 90
+  m_AmbientSkyColor: {r: 0.6006, g: 0.60852003, b: 0.66, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -791,6 +791,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2251577096815669203, guid: 71891a0a26c7f58458a29a9802f4d2e5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.53082275
+      objectReference: {fileID: 0}
     - target: {fileID: 3632539768947813729, guid: 71891a0a26c7f58458a29a9802f4d2e5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1203,6 +1207,7 @@ GameObject:
   - component: {fileID: 1707265297}
   - component: {fileID: 1707265296}
   - component: {fileID: 1707265299}
+  - component: {fileID: 1707265300}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1246,7 +1251,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1297,7 +1302,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1307,6 +1312,23 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1707265300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707265295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
 --- !u!1 &1968373357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1525,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cloud
       objectReference: {fileID: 0}
+    - target: {fileID: 3918331715421263026, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7206576657567439552, guid: 1d753d85e20c961409d5b4808287f638, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1578,14 +1604,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1746,9 +1772,77 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1968373358}
     m_Modifications:
+    - target: {fileID: 606217948, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: haveFog
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: mobs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: mobs.Array.data[1].item
+      value: 
+      objectReference: {fileID: 7283971992458010935, guid: 1ba897e6bafa67740a4d91ff604baa79, type: 3}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: mobs.Array.data[1].chance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[4].item
+      value: 
+      objectReference: {fileID: 7184394597613040145, guid: 59500e5cebe8c554a87af9372558be60, type: 3}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[5].item
+      value: 
+      objectReference: {fileID: 7030210380040319964, guid: ac490a125150cab44828f1aff116a3f0, type: 3}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[6].item
+      value: 
+      objectReference: {fileID: 6813224493247431358, guid: e8e9653449aba1143b635c6ec97e26b9, type: 3}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[7].item
+      value: 
+      objectReference: {fileID: 3099135761841176139, guid: a18a2758e418d7d4c8fc9c81fd3c8191, type: 3}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[0].chance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[1].chance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[2].chance
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[3].chance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[4].chance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[5].chance
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[6].chance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996091318205773796, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
+      propertyPath: decorations.Array.data[7].chance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1996091318205773797, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1996091318205773797, guid: 5466ce330ac78964d9739404fe7d4573, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1983,6 +2077,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1968373358}
     m_Modifications:
+    - target: {fileID: 1600858731, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: haveFog
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: mobs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: mobs.Array.data[1].item
+      value: 
+      objectReference: {fileID: 7283971992458010935, guid: 3c0a72f1110df64488fdced88d988661, type: 3}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: mobs.Array.data[1].chance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.data[1].item
+      value: 
+      objectReference: {fileID: 492362722639800601, guid: 6fdc667cf9641ac45a2c852a2735d467, type: 3}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.data[3].item
+      value: 
+      objectReference: {fileID: 5089835384029422823, guid: c93c4b9d587d09545973a8bf7d074354, type: 3}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.data[0].chance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.data[1].chance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919250458663748388, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
+      propertyPath: decorations.Array.data[3].chance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8919250458663748389, guid: 75826c1e9d80e904f8462d4c407896b4, type: 3}
       propertyPath: m_RootOrder
       value: 0

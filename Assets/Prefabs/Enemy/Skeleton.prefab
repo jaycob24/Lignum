@@ -752,7 +752,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1bedd2cbf37cb4a4f892846ec07c546e, type: 2}
+  - {fileID: 2100000, guid: 5f4f175023a82f74fa300630a6504d7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   animator: {fileID: 1684884421832378047}
-  Waypoints: []
+  waypoints: []
   indexOfWaypoint: 0
   isNowAttack: 0
   attackToEnemyAudioClips: {fileID: 8300000, guid: ad4b90599e56b664b81912521376ce5d, type: 3}

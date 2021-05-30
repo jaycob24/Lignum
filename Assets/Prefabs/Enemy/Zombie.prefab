@@ -35,7 +35,7 @@ GameObject:
   - component: {fileID: 677008269}
   - component: {fileID: 1050071592326953876}
   m_Layer: 0
-  m_Name: EnemyZoombieSword
+  m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,12 +155,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   animator: {fileID: 4946422088225695686}
-  Waypoints: []
+  waypoints: []
   indexOfWaypoint: 0
   isNowAttack: 0
-  attackToEnemyAudioClips: {fileID: 8300000, guid: ad4b90599e56b664b81912521376ce5d, type: 3}
+  attackToEnemyAudioClips: {fileID: 8300000, guid: 1c83873ec71631e4e8233f8e43539cfe, type: 3}
   attackToAirAudioClips: {fileID: 8300000, guid: c41e981130a38e94395ebff16df20552, type: 3}
-  attackToSwordAudioClips: {fileID: 8300000, guid: c5190c432d35c7645a3a0bbca1242870, type: 3}
+  attackToSwordAudioClips: {fileID: 8300000, guid: 5978e042c27a6954898b4e64cf3b6969, type: 3}
   health: 100
   death: {fileID: 8300000, guid: b045ab255de824547b796d48276f7874, type: 3}
 --- !u!82 &1050071592326953876
